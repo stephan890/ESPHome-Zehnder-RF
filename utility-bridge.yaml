@@ -55,6 +55,7 @@ api:
             }
 
 ota:
+- platform: esphome
   password: !secret "zehnder_comfofan_ota_password"
 
 wifi:
