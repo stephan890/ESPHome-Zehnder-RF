@@ -225,6 +225,12 @@ nrf905:
   am_pin: GPIO32
   dr_pin: GPIO35
 
+# Ensure nrf905 is fully initialized with a short delay
+interval:
+  - interval: 5s
+    then:
+      - lambda: |-
+            ESP_LOGI("main", "nRF905 initialized, proceeding with Zehnder setup");
 # The FAN controller
 fan:
   - platform: zehnder
