@@ -488,7 +488,8 @@ void ZehnderRF::queryDevice(void) {
 
   // Build frame
   pFrame->rx_type = this->config_.fan_main_unit_type;
-  pFrame->rx_id = this->config_.fan_main_unit_id;
+  // pFrame->rx_id = this->config_.fan_main_unit_id;
+  pFrame->rx_id = 0x00;  // Broadcast - this should fix the CO2 sensor overriding the call
   pFrame->tx_type = this->config_.fan_my_device_type;
   pFrame->tx_id = this->config_.fan_my_device_id;
   pFrame->ttl = FAN_TTL;
