@@ -1,3 +1,5 @@
+# Note: for the actual configuration I'm using, see: https://github.com/DevSecNinja/home-assistant-config/blob/main/esphome/zehnder-rf.yaml
+
 substitutions:
   hostname: zehnder-comfofan
   device_name: Zehnder ComfoFan
