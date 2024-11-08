@@ -240,7 +240,8 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
 
           // Found a main unit, so send a join request
           pTxFrame->rx_type = FAN_TYPE_MAIN_UNIT;  // Set type to main unit
-          pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
+          // pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
+          pTxFrame->rx_id = 0x00;  // Broadcast - this should fix the CO2 sensor overriding the call
           pTxFrame->tx_type = this->config_.fan_my_device_type;
           pTxFrame->tx_id = this->config_.fan_my_device_id;
           pTxFrame->ttl = FAN_TTL;
@@ -292,7 +293,8 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
             (void) memset(this->_txFrame, 0, FAN_FRAMESIZE);  // Clear frame data
 
             pTxFrame->rx_type = FAN_TYPE_MAIN_UNIT;  // Set type to main unit
-            pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
+            // pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
+            pTxFrame->rx_id = 0x00;  // Broadcast - this should fix the CO2 sensor overriding the call
             pTxFrame->tx_type = this->config_.fan_my_device_type;
             pTxFrame->tx_id = this->config_.fan_my_device_id;
             pTxFrame->ttl = FAN_TTL;
