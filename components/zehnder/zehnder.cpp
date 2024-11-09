@@ -528,7 +528,15 @@ void ZehnderRF::setSpeed(const uint8_t paramSpeed, const uint8_t paramTimer) {
     pFrame->tx_id = this->config_.fan_my_device_id;
     pFrame->ttl = FAN_TTL;
 
-    if (timer == 0) {
+    if (timer == 0 && speed == 0) {
+      // We want to switch to auto by setting both the timer and speed to 0
+      // This mimics the Timer RF 'OFF' command.
+      pFrame->command = FAN_FRAME_SETTIMER;
+      pFrame->parameter_count = sizeof(RfPayloadFanSetTimer);
+      pFrame->payload.setTimer.speed = speed;
+      pFrame->payload.setTimer.timer = timer;
+    }
+    else if (timer == 0) {
       pFrame->command = FAN_FRAME_SETSPEED;
       pFrame->parameter_count = sizeof(RfPayloadFanSetSpeed);
       pFrame->payload.setSpeed.speed = speed;
