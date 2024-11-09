@@ -523,7 +523,8 @@ void ZehnderRF::setSpeed(const uint8_t paramSpeed, const uint8_t paramTimer) {
     // Build frame
     pFrame->rx_type = this->config_.fan_main_unit_type;
     pFrame->rx_id = 0x00;  // Broadcast
-    pFrame->tx_type = this->config_.fan_my_device_type;
+    // pFrame->tx_type = this->config_.fan_my_device_type;
+    pFrame->tx_type = 0x16; // This is the ID of the remote with 10/30/60/auto buttons
     pFrame->tx_id = this->config_.fan_my_device_id;
     pFrame->ttl = FAN_TTL;
 
