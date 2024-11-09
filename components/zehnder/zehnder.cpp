@@ -254,8 +254,7 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
 
           // Found a main unit, so send a join request
           pTxFrame->rx_type = FAN_TYPE_MAIN_UNIT;  // Set type to main unit
-          // pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
-          pTxFrame->rx_id = 0x00;  // Broadcast - this should fix the CO2 sensor overriding the call
+          pTxFrame->rx_id = pResponse->tx_id;      // Set ID to the ID of the main unit
           pTxFrame->tx_type = this->config_.fan_my_device_type;
           pTxFrame->tx_id = this->config_.fan_my_device_id;
           pTxFrame->ttl = FAN_TTL;
@@ -403,6 +402,8 @@ void ZehnderRF::rfHandleReceived(const uint8_t *const pData, const uint8_t dataL
             ESP_LOGD(TAG, "Received fan settings; speed: 0x%02X voltage: %i timer: %i",
                      pResponse->payload.fanSettings.speed, pResponse->payload.fanSettings.voltage,
                      pResponse->payload.fanSettings.timer);
+            // No idea why we need to commit twice, but got it from TimelessNL b4ae8c4
+            this->rfComplete();
 
             this->rfComplete();
 
@@ -488,8 +489,7 @@ void ZehnderRF::queryDevice(void) {
 
   // Build frame
   pFrame->rx_type = this->config_.fan_main_unit_type;
-  // pFrame->rx_id = this->config_.fan_main_unit_id;
-  pFrame->rx_id = 0x00;  // Broadcast - this should fix the CO2 sensor overriding the call
+  pFrame->rx_id = this->config_.fan_main_unit_id;
   pFrame->tx_type = this->config_.fan_my_device_type;
   pFrame->tx_id = this->config_.fan_my_device_id;
   pFrame->ttl = FAN_TTL;
